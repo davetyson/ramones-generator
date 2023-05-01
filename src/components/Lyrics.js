@@ -4,14 +4,15 @@
 // there is going to be a state for the lyrics themselves
     // every time the state for lyrics is generated, have a useEffect that updates the lyrics box below with the new title
 
-const Lyrics = () => {
+const Lyrics = (props) => {
     return (
         <>
             {/* Replace this with the eventual song title that generates */}
-            <h2>Lyrics</h2>
+            <h2>{props.songTitle}</h2>
 
             <section className="lyrics">
                 {/* This is where the generated lyrics will go */}
+                <p>{props.lyrics}</p>
             </section>
         </>
     )

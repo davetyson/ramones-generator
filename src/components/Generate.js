@@ -1,6 +1,11 @@
-const Generate = () => {
+const Generate = (props) => {
+
+    const handleGenerate = () => {
+        props.setNewSong(true);
+    };
+
     return (
-        <button>Generate Lyrics</button>
+        <button onClick={handleGenerate}>Generate Lyrics</button>
     )
 }
 
