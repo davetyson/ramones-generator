@@ -10,7 +10,7 @@ import Disclaimer from "./Disclaimer";
 const Main = () => {
 
     const [ songTitle, setSongTitle ] = useState("");
-    const [ lyrics, setLyrics ] = useState("");
+    const [ lyrics, setLyrics ] = useState([]);
     const [ activity, setActivity ] = useState("");
     const [ like, setLike ] = useState(false);
     const [ newSong, setNewSong ] = useState(false);
@@ -38,15 +38,15 @@ const Main = () => {
             axios.post(
                 "https://api.openai.com/v1/completions",
                 {
-                    prompt: `Generate a Ramones-style song about ${likeText} ${activity} using the following format:
+                    prompt: `Generate a Ramones-style song about ${likeText} ${activity} using the following format (do not provide labels):
 
-                    1. Song Title
-                    2. Verse
-                    3. Chorus
-                    4. Verse
-                    5. Chorus
-                    6. Bridge
-                    7. Chorus`,
+                    Song Title
+                    Verse
+                    Chorus
+                    Verse
+                    Chorus
+                    Bridge
+                    Chorus`,
                     model: "text-davinci-003",
                     max_tokens: 500,
                     temperature: 0.6,
@@ -60,22 +60,18 @@ const Main = () => {
             ).then((apiData) => {
                 console.log(apiData);
                 const splitInit = (apiData.data.choices[0].text).split("\n");
-                const splitTitle = splitInit[2].split(" ");
-                const verse1Raw1 = splitInit[3].split(" ");
-                const verse1Raw2 = splitInit[4];
-                const chorusRaw1 = splitInit[5].split(" ");
-                const chorusRaw2 = splitInit[6];
-                const verse2Raw1 = splitInit[7].split(" ");
-                const verse2Raw2 = splitInit[8];
-                const bridgeRaw1 = splitInit[11].split(" ");
-                const bridgeRaw2 = splitInit[12];
-                const refinedLyrics = verse1Raw1 + verse1Raw2 + chorusRaw1 + chorusRaw2 + verse2Raw1 + verse2Raw2 + chorusRaw1 + chorusRaw2 + bridgeRaw1 + bridgeRaw2 + chorusRaw1 + chorusRaw2;
-                console.log(splitInit);
-                console.log(splitTitle[1]);
-                console.log(refinedLyrics);
+                if (splitInit[2][0] === '"') {
+                    const newSplitTitleArray = splitInit[2].split('"');
+                    const splitTitle = newSplitTitleArray[1];
+                    setSongTitle(splitTitle);
+                    console.log(splitInit[2]);
+                    console.log(splitTitle);
+                } else {
+                    const splitTitle = splitInit[2];
+                    setSongTitle(splitTitle);
+                }
                 // console.log(apiData.data.choices[0].text);
-                setSongTitle(splitTitle[1]);
-                setLyrics(refinedLyrics);
+                setLyrics(splitInit.slice(3));
                 setNewSong(false);
             });
         }

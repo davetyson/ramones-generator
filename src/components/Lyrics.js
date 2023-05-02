@@ -11,8 +11,12 @@ const Lyrics = (props) => {
             <h2>{props.songTitle}</h2>
 
             <section className="lyrics">
-                {/* This is where the generated lyrics will go */}
-                <p>{props.lyrics}</p>
+
+                {props.lyrics.map((line, index) => {
+                    return (
+                            <p key={index}>{line}</p>
+                    )
+                })}
             </section>
         </>
     )
