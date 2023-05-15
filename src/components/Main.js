@@ -80,26 +80,33 @@ const Main = () => {
     }, [newSong])
 
     return (
-        <>
-            <Info />
-            <Input
-                activity={activity}
-                setActivity={setActivity}
-            />
-            <Like
-                like={like}
-                setLike={setLike}
-                handleLike={handleLike}
-            />
-            <Generate
-                setNewSong={setNewSong}
-            />
-            <Lyrics
-                songTitle={songTitle}
-                lyrics={lyrics}
-            />
-            <Disclaimer />
-        </>
+        <section>
+            <div className="flex flex-wrap p-10">
+                <h2 className="uppercase quantico m-0 w-full text-4xl font-bold text-customGreen">Generate New Song</h2>
+                <section className="wcust m-5 p-5 bg-white text-black rounded-md">
+                    <Info/>
+                    <Input
+                        activity={activity}
+                        setActivity={setActivity}
+                    />
+                    <Like
+                        like={like}
+                        setLike={setLike}
+                        handleLike={handleLike}
+                    />
+                    <Generate
+                        setNewSong={setNewSong}
+                    />
+                    {/* <Disclaimer /> */}
+                </section>
+                <section className="wcust m-5 p-5 bg-white text-black rounded-md flex">
+                    <Lyrics
+                        songTitle={songTitle}
+                        lyrics={lyrics}
+                    />
+                </section>
+            </div>
+        </section>
     )
 }
 

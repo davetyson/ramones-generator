@@ -7,17 +7,22 @@
 const Lyrics = (props) => {
     return (
         <>
+        {props.songTitle ? 
+        <section className="w-full">
             {/* Replace this with the eventual song title that generates */}
-            <h2>{props.songTitle}</h2>
+            <h3 className="quantico mb-5 text-2xl">{props.songTitle}</h3>
 
             <section className="lyrics">
 
                 {props.lyrics.map((line, index) => {
                     return (
-                            <p key={index}>{line}</p>
+                            <p className="text-xl quantico" key={index}>{line}</p>
                     )
                 })}
             </section>
+        </section>
+        : <h3 className="quantico w-2/3 inline-block m-auto text-2xl content-center">Your new song will appear here! Fill out the generator to get started.</h3>
+        }
         </>
     )
 }
