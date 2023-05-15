@@ -1,4 +1,4 @@
-const Info = () => {
+const Instructions = () => {
     return (
         <section>
             <h3 className="mb-5 text-2xl quantico underline">Instructions</h3>
@@ -7,4 +7,4 @@ const Info = () => {
     )
 }
 
-export default Info;
+export default Instructions;

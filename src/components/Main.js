@@ -82,7 +82,7 @@ const Main = () => {
         <section>
             <div className="flex flex-wrap p-10">
                 <h2 className="uppercase quantico m-0 w-full text-4xl font-bold text-customGreen">Generate New Song</h2>
-                <section className="wcust m-5 p-5 bg-white text-black rounded-md">
+                <section className="lg:wcust m-5 p-5 bg-white text-black rounded-lg">
                     <Instructions/>
                     <Input
                         activity={activity}
@@ -98,7 +98,7 @@ const Main = () => {
                     />
                     {/* <Disclaimer /> */}
                 </section>
-                <section className="wcust m-5 p-5 bg-white text-black rounded-md flex">
+                <section className="lg:wcust w-full m-5 p-5 bg-white text-black rounded-lg flex">
                     <Lyrics
                         songTitle={songTitle}
                         lyrics={lyrics}

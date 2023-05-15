@@ -17,6 +17,10 @@
     justify-content: space-evenly;
   }
 
+  .radio {
+    accent-color: #A8E557;
+  }
+
   .quantico {
     font-family: 'Quantico', sans-serif;
   }

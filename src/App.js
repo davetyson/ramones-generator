@@ -19,7 +19,7 @@ function App() {
             <nav className="p-2 border-t-4 border-b-4">
                 <ul className="menu flex mx-auto quantico text-4xl">
                     <li>
-                        <Link to="/" className="hover:text-customGreen focus:text-customGreen transition">Home</Link>
+                        <Link to="/" className="hover:text-customGreen focus:text-customGreen transition">Generator</Link>
                     </li>
                     <li>
                         <Link to="/mysongs" className="hover:text-customGreen focus:text-customGreen transition">My Songs</Link>
