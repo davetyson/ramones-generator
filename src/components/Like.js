@@ -6,9 +6,9 @@ const Like = (props) => {
             <div className="w-1/2 mx-auto mb-5 flex radio">
                 <div>
                     <input className="scale-150" type="radio" name="choice-radio" onClick={()=>{props.handleLike(true)}} />
-                    <label className="ml-2 text-lg" htmlFor="activity">Yes</label>
+                    <label className="mx-2 text-lg" htmlFor="activity">Yes</label>
                 </div>
-                <div>
+                <div className="ml-2">
                     <input className="scale-150" type="radio" name="choice-radio" onClick={()=>{props.handleLike(false)}} />
                     <label className="ml-2 text-lg" htmlFor="activity">No</label>
                 </div>
