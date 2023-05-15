@@ -12,7 +12,7 @@ const Lyrics = (props) => {
         <>
             { props.loading === true ?
                 <section>
-                    <figure className="max-w-screen-md m-auto content-center animate-rotate">
+                    <figure className="max-w-screen-md m-auto content-center animate-rotate loadAnimate">
                         <img className="p-5" src={circleLogo} alt="ramones generator" />
                     </figure> 
                     <h3 className="quantico my-5 mx-auto p-2 text-2xl rounded-md bg-black text-customGreen w-fit animate-pulse">Loading song...</h3>       
