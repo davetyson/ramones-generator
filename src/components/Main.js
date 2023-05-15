@@ -14,6 +14,7 @@ const Main = () => {
     const [ like, setLike ] = useState(false);
     const [ newSong, setNewSong ] = useState(false);
     const [ likeText, setLikeText ] = useState("");
+    const [ loading, setLoading ] = useState(false);
 
     const handleLike = (like) => {
         if (like === true) {
@@ -33,6 +34,8 @@ const Main = () => {
         if (newSong === true) {
 
             const apiKey = process.env.REACT_APP_API_KEY;
+
+            setLoading(true);
 
             axios.post(
                 "https://api.openai.com/v1/completions",
@@ -71,6 +74,7 @@ const Main = () => {
                 // console.log(apiData.data.choices[0].text);
                 setLyrics(splitInit.slice(3));
                 setNewSong(false);
+                setLoading(false);
             });
         }
         
@@ -100,6 +104,7 @@ const Main = () => {
                     <Lyrics
                         songTitle={songTitle}
                         lyrics={lyrics}
+                        loading={loading}
                     />
                 </section>
             </div>

@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      animation: {
+        'rotate': 'spin 3s linear infinite',
+      },
       colors: {
         customGreen: '#A8E557',
       },
