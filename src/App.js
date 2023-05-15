@@ -13,8 +13,8 @@ function App() {
     <div className="App">
       <header className="h-20vh pt-5">
             <h1 className="hidden">Ramones Generator</h1>
-            <figure className="max-w-screen-md m-5">
-                <img src={logo} alt="ramones generator" />
+            <figure className="max-w-screen-md mx-auto">
+                <img className="p-5" src={logo} alt="ramones generator" />
             </figure>
             <nav className="p-2 border-t-4 border-b-4">
                 <ul className="menu flex mx-auto quantico lg:text-4xl text-xl">
