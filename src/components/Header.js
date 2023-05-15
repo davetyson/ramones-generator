@@ -1,4 +1,8 @@
 import logo from "../assets/ramonesGeneratorLogo.png";
+import { Routes, Route, Link } from "react-router-dom";
+import Main from "./Main";
+import ComingSoon from "./ComingSoon";
+import Disclaimer from "./Info";
 
 const Header = () => {
     return (
@@ -10,16 +14,21 @@ const Header = () => {
             <nav className="p-2 border-t-4 border-b-4">
                 <ul className="menu flex mx-auto quantico text-4xl">
                     <li>
-                        <button className="hover:text-customGreen focus:text-customGreen transition">Home</button>
+                        <Link to="/" className="hover:text-customGreen focus:text-customGreen transition">Home</Link>
                     </li>
                     <li>
-                        <button className="hover:text-customGreen focus:text-customGreen transition">My Songs</button>
+                        <Link to="/mysongs" className="hover:text-customGreen focus:text-customGreen transition">My Songs</Link>
                     </li>
                     <li>
-                        <button className="hover:text-customGreen focus:text-customGreen transition">Info</button>
+                        <Link to="/info" className="hover:text-customGreen focus:text-customGreen transition">Info</Link>
                     </li>
                 </ul>
             </nav>
+            <Routes>
+                <Route path="/" element={ <Main />} />
+                <Route path="/mysongs" element={ <ComingSoon /> } />
+                <Route path="/info" element={ <Disclaimer /> } />
+            </Routes>
         </header>
     )
 }

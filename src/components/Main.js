@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Info from "./Info";
+import Instructions from "./Instructions";
 import Input from "./Input";
 import Like from "./Like";
 import Generate from "./Generate";
 import Lyrics from "./Lyrics";
-import Disclaimer from "./Disclaimer";
 
 const Main = () => {
 
@@ -84,7 +83,7 @@ const Main = () => {
             <div className="flex flex-wrap p-10">
                 <h2 className="uppercase quantico m-0 w-full text-4xl font-bold text-customGreen">Generate New Song</h2>
                 <section className="wcust m-5 p-5 bg-white text-black rounded-md">
-                    <Info/>
+                    <Instructions/>
                     <Input
                         activity={activity}
                         setActivity={setActivity}

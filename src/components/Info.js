@@ -1,8 +1,11 @@
 const Info = () => {
     return (
-        <section>
-            <h3 className="mb-5 text-2xl quantico underline">Instructions</h3>
-            <p className="mb-5 text-lg">Answer the following two questions and Ramones Generator will give you new Ramones-style song lyrics that you can use with your band. Gabba gabba hey!</p>
+        <section className="p-10">
+            <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">Info</h2>
+            <h3 className="mb-5 text-2xl quantico underline">Disclaimer</h3>
+            <p className="mb-5 text-lg w-2/3 inline-block mx-auto">This website is purely for entertainment value and not intended for monetary gain. I am not affiliated with the Ramones in any way, I'm just a dev that loves the Ramones!</p>
+            <p className="sr-only">The following links will open in a new tab.</p>
+            <p className="mb-5 text-lg w-2/3 inline-block mx-auto">Built by Dave Tyson. To see more of my work, <a className="transition hover:text-customGreen focus:text-customGreen" href="https://davetyson.tech" target="_blank">check out my development profile here</a>, or <a className="transition hover:text-customGreen focus:text-customGreen" href="https://linktr.ee/davetyson" target="_blank">check out the bands I play in here</a>.</p>
         </section>
     )
 }

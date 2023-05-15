@@ -14,8 +14,8 @@ const Footer = () => {
 
     return (
         // Footer generated with the current year from the useEffect above
-        <footer>
-            <p>© Dave Tyson {currentYear}.</p>
+        <footer className="border-t-4">
+            <a className="inline-block mb-5 mt-5 transition hover:text-customGreen focus:text-customGreen" href="https://davetyson.tech"><p className="text-2xl quantico">© Dave Tyson {currentYear}.</p></a>
         </footer>
     )
 }

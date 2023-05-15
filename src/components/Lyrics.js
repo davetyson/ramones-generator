@@ -10,7 +10,7 @@ const Lyrics = (props) => {
         {props.songTitle ? 
         <section className="w-full">
             {/* Replace this with the eventual song title that generates */}
-            <h3 className="quantico mb-5 text-2xl">{props.songTitle}</h3>
+            <h3 className="quantico mb-5 mx-auto p-2 text-2xl rounded-md bg-black text-white w-fit">{props.songTitle}</h3>
 
             <section className="lyrics">
 
