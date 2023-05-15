@@ -21,7 +21,7 @@ const Input = (props) => {
                 <h3 className="mb-5 text-xl quantico underline">Question 1</h3>
                 <p className="mb-1 text-lg">What are you doing in the song?</p>
                 <label className="mb-5 text-sm" htmlFor="activity">Enter any activity (i.e. going to the basement, being sedated, going to rockaway beach, etc).</label>
-                <input className="text-white text-center text-2xl border-4 border-black mb-5 p-1 quantico rounded-md bg-black" id="activity" type="text" name="activity" placeholder="Enter your activity here" onChange={handleChange} value={props.activity}/>
+                <input className="text-white text-center lg:text-2xl text-xl border-4 border-black mb-5 p-1 quantico rounded-md bg-black" id="activity" type="text" name="activity" placeholder="Enter your activity here" onChange={handleChange} value={props.activity}/>
             </div>
         </>
     )

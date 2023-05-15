@@ -17,7 +17,7 @@ function App() {
                 <img src={logo} alt="ramones generator" />
             </figure>
             <nav className="p-2 border-t-4 border-b-4">
-                <ul className="menu flex mx-auto quantico text-4xl">
+                <ul className="menu flex mx-auto quantico lg:text-4xl text-xl">
                     <li>
                         <Link to="/" className="hover:text-customGreen focus:text-customGreen transition">Generator</Link>
                     </li>
