@@ -29,12 +29,12 @@ function App() {
                     </li>
                 </ul>
             </nav>
-            <Routes>
-                <Route path="/" element={ <Main />} />
-                <Route path="/mysongs" element={ <ComingSoon /> } />
-                <Route path="/info" element={ <Info /> } />
-            </Routes>
       </header>
+      <Routes>
+          <Route path="/" element={ <Main />} />
+          <Route path="/mysongs" element={ <ComingSoon /> } />
+          <Route path="/info" element={ <Info /> } />
+      </Routes>
       <Footer />
     </div>
   );

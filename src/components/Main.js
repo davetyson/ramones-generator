@@ -63,8 +63,7 @@ const Main = () => {
                     const newSplitTitleArray = splitInit[2].split('"');
                     const splitTitle = newSplitTitleArray[1];
                     setSongTitle(splitTitle);
-                    console.log(splitInit[2]);
-                    console.log(splitTitle);
+                    console.log(splitInit);
                 } else {
                     const splitTitle = splitInit[2];
                     setSongTitle(splitTitle);
@@ -96,7 +95,6 @@ const Main = () => {
                     <Generate
                         setNewSong={setNewSong}
                     />
-                    {/* <Disclaimer /> */}
                 </section>
                 <section className="lg:wcust w-full m-5 p-5 bg-white text-black rounded-lg flex">
                     <Lyrics
