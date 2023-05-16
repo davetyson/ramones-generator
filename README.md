@@ -5,6 +5,7 @@
 If you love the Ramones but can't write anything close to "Blitzkrieg Bop," then this generator is for you. **Ramones Generator** uses OpenAI API to generate Ramones-style lyrics based on a short survey:
 
 **Q1:** What are you doing?
+
 **Q2:** Do you like it?
 
 Enter your info and Ramones Generator will do the rest! Put a few chords together and you have your next hit song.
