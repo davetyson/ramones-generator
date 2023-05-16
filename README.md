@@ -10,6 +10,8 @@ If you love the Ramones but can't write anything close to "Blitzkrieg Bop," then
 
 Enter your info and Ramones Generator will do the rest! Put a few chords together and you have your next hit song.
 
+View the live website (main repo) and use the generator here: [Ramones Generator](https://ramonesgenerator.netlify.app)
+
 Not intended for monetary gain, I'm just a developer that loves the Ramones!
 
 ### Features in planning or development:
