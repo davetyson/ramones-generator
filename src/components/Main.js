@@ -83,7 +83,7 @@ const Main = () => {
 
     return (
         <section>
-            <div className="flex flex-wrap p-10">
+            <div className="flex flex-wrap p-10 max-w-7xl mx-auto">
                 <h2 className="uppercase quantico m-0 w-full text-4xl font-bold text-customGreen">Generate New Song</h2>
                 <section className="lg:wcust m-5 p-5 bg-white text-black rounded-lg">
                     <Instructions/>

@@ -10,6 +10,7 @@
 
   img {
     @apply max-w-full h-auto block;
+    min-width: 300px;
   }
 
   .menu,
