@@ -1,7 +1,7 @@
 const Info = () => {
     return (
         <section className="p-10">
-            <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">Info</h2>
+            <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">Information</h2>
             <h3 className="mb-5 text-2xl quantico underline">Disclaimer</h3>
             <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">This website is purely for entertainment value and not intended for monetary gain. I am not affiliated with the Ramones in any way, I'm just a dev that loves the Ramones!</p>
             <p className="sr-only">The following links will open in a new tab.</p>
