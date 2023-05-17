@@ -8,31 +8,35 @@ import Info from './components/Info';
 
 import './App.css';
 
-// import { initializeApp } from "firebase/app";
-// import { getAuth, connectAuthEmulator } from "firebase/auth";
-// // signInWithEmailAndPassword, createUserWithEmailAndPassword
+import { initializeApp } from "firebase/app";
+import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, signOut } from "firebase/auth";
+// connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
-//   authDomain: "ramones-generator.firebaseapp.com",
-//   projectId: "ramones-generator",
-//   storageBucket: "ramones-generator.appspot.com",
-//   messagingSenderId: "295603373754",
-//   appId: "1:295603373754:web:e9f185081077c9b863e483"
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
+  authDomain: "ramones-generator.firebaseapp.com",
+  projectId: "ramones-generator",
+  storageBucket: "ramones-generator.appspot.com",
+  messagingSenderId: "295603373754",
+  appId: "1:295603373754:web:e9f185081077c9b863e483"
+};
 
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-// connectAuthEmulator(auth, "http://localhost:9099");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+connectAuthEmulator(auth, "http://localhost:9099");
 
-// const loginEmailPassword = async () => {
-//     setLoginWindow(true);
-//     const loginEmail = "test@test.com";
-//     const loginPassword = "123456";
+const loginEmailPassword = async () => {
+    // setLoginWindow(true);
+    const loginEmail = "test@test.com";
+    const loginPassword = "123456";
 
-//     const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-//     console.log(userCredential.user);
-// }
+    const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    console.log(userCredential.user);
+}
+
+const logOut = async () => {
+    await signOut(auth);
+}
 
 function App() {
   return (
@@ -43,6 +47,8 @@ function App() {
             <figure className="max-w-screen-md mx-auto -mb-10">
                 <img className="p-5" src={logo} alt="ramones generator" />
             </figure>
+            <button className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold lg:absolute lg:right-14 lg:top-10 transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black" onClick={loginEmailPassword}>Log In</button>
+            <button className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold lg:absolute lg:right-14 lg:top-40 transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black" onClick={logOut}>Log Out</button>
             {/* <Login /> */}
         </div>
         <nav className="p-2 mt-5 border-t-4 border-b-4">
