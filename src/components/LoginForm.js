@@ -14,18 +14,18 @@ const LoginForm = (props) => {
 
     return (
         <>
-            <section>
-                <h2 className="mb-10 mt-10 uppercase quantico w-full text-4xl font-bold text-customGreen">Log In</h2>
+            <section className="p-10">
+                <h2 className="mb-10 uppercase quantico w-full text-4xl font-bold text-customGreen">Log In</h2>
                 <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">Log in to your account to save new songs and view your saved favorites!</p>
                 <div>
-                    <form action="">
+                    <form onSubmit={()=>{props.logAttempt()}}>
                         <fieldset className="flex flex-col items-center">
                             <label className="sr-only" htmlFor="email">Email</label>
                             <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-1/2" id="email" type="email" placeholder="Email" onChange={handleEmailChange} value={props.email} />
                             <label className="sr-only" htmlFor="password">Password</label>
                             <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-1/2" id="password" type="password" placeholder="Password" onChange={handlePasswordChange} value={props.password} />
                         </fieldset>
-                        <button type="submit">Log In</button>
+                        <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">Log In</button>
                     </form>
                 </div>
             </section>

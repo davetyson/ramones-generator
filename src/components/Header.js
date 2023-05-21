@@ -1,18 +1,29 @@
 import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import logo from '../assets/ramonesGeneratorLogo.png'
-import Login from './Login';
+// import Login from './Login';
 import NavBar from './NavBar';
-import LoginForm from './LoginForm';
+// import LoginForm from './LoginForm';
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 // If I need the emulator I can bring it back
 // connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword
 
 const Header = () => {
 
+    // TO DO
+    // Because of the weirdness of passing state values between links, I'm going to move all the login/auth stuff for firebase to the login form instead of having it in the header here
+    // The Header will only have the login button and link to it like any other Nav link
+    // Once I move all this firebase stuff to the login form, the input states will work again
+    // I can run all the functions to check the login data when the user submits their form
+    // Depending on what happens, render different html
+    // Store the user ID in the local storage and see if you can use that to access later when they click on the "my songs" area, and pull it into a new state from there, rather than trying to pass the same state down through links
+    // Clean up the header and login form code to tidy up
+
     // useStates
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ loginError , setLoginError ] = useState("");
+    // const [ loginWindow , setLoginWindow ] = useState(false);
     const [ email , setEmail ] = useState("");
     const [ password , setPassword ] = useState("");
 
@@ -30,18 +41,17 @@ const Header = () => {
     // initialize firebase app and auth
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    
-    // I gotta check on this line above because I also const auth in the loginEmailPassword thing. It works just fine right now but seems a bit oddly built. I probably need to switch this all around so that the loginEmailPassword is actually just a useEffect that is triggered when the loggedIn state changes, rather than a function that is called when the Login button is clicked. That way I don't need the two functions (loginEmailPassword and logOut), I can just put them all in one useEffect and say "if loggedIn === false" then run the signOut call, and "if loggedIn === true" then run the signIn call and do all the error handling.
 
     // Emulators
-    connectAuthEmulator(auth, "https://localhost:9099");
+    // connectAuthEmulator(auth, "https://localhost:9099");
 
     // logAttempt function
-    const logAttempt = async () => {
+    const logAttempt = async (e) => {
+        e.preventDefault();
         if (loggedIn === false) {
             // test data
-            const loginEmail = "test@test.com";
-            const loginPassword = "123456";
+            const loginEmail = email;
+            const loginPassword = password;
 
             // call 
             const auth = getAuth(app);
@@ -66,42 +76,10 @@ const Header = () => {
         }
     }
 
-    // login logic when login/out button is clicked
-    // const loginEmailPassword = async () => {
-
-    //     // test data
-    //     const loginEmail = "test@test.com";
-    //     const loginPassword = "123456";
-
-    //     // call 
-    //     const auth = getAuth(app);
-    //         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
-    //         .then((userCredential) => {
-    //             const user = userCredential.user;
-    //             setLoggedIn(true);
-    //             console.log(user);
-    //         })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             setLoggedIn(false);
-    //             setLoginError(errorCode);
-    //             console.log(errorCode);
-    //             console.log(errorMessage);
-    //         });
-    // }
-
-    // // this logs the user out but see the note above about adapting into a useEffect
-    // const logOut = async () => {
-    //     const loggedOutMsg = await signOut(auth);
-    //     console.log(loggedOutMsg);
-    //     setLoggedIn(false);
-    // }
-
     // this just console.logs the loggedIn status so I know what it is while testing
-    useEffect(() => {
-        console.log(loggedIn);
-    }, [loggedIn])
+    // useEffect(() => {
+    //     console.log(loggedIn);
+    // }, [loggedIn])
 
     useEffect(() => {
         console.log(loginError);
@@ -118,24 +96,30 @@ const Header = () => {
            <header className="h-20vh pt-5">
                 <div className="relative max-w-7xl mx-auto">
                     <h1 className="sr-only">Ramones Generator</h1>
+                    <NavLink to="/">
                     <figure className="max-w-screen-md mx-auto -mb-10">
                         <img className="p-5" src={logo} alt="ramones generator" />
                     </figure>
+                    </NavLink>
                 </div>
-                <Login 
-                    // loginEmailPassword={loginEmailPassword}
-                    // logOut={logOut}
-                    loggedIn={loggedIn}
-                    logAttempt={logAttempt}
-                />
+                <NavLink to="/login" className="hover:text-customGreen focus:text-customGreen transition text-center">
+                    <button className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold lg:absolute lg:right-14 lg:top-10 transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">{loggedIn === false ? `Log In` : `Log Out`}</button>
+                    {/* <Login 
+                        loginEmailPassword={loginEmailPassword}
+                        logOut={logOut}
+                        loggedIn={loggedIn}
+                        setLoginWindow={setLoginWindow}
+                    /> */}
+                </NavLink>
                 <NavBar />
-                {loggedIn === false ? 
+                {/* {loginWindow === true ? 
                     <LoginForm 
                         email={email}
                         setEmail={setEmail}
                         password={password}
                         setPassword={setPassword}
-                    /> : <></>}
+                        logAttempt={logAttempt}
+                    /> : <></>} */}
             </header> 
         </>
     )

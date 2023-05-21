@@ -4,6 +4,7 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 import ComingSoon from './components/ComingSoon';
 import Info from './components/Info';
+import LoginForm from './components/LoginForm';
 
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={ <Main />} />
           <Route path="/mysongs" element={ <ComingSoon /> } />
           <Route path="/info" element={ <Info /> } />
+          <Route path="/login" element={ <LoginForm /> } />
       </Routes>
       <Footer />
     </div>

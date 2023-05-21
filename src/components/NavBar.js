@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const NavBar = (props) => {
+const NavBar = () => {
 
     return (
         <nav className="p-2 mt-5 border-t-4 border-b-4">
