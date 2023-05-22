@@ -47,7 +47,7 @@ const Header = () => {
         const loggedOutMsg = await signOut(auth);
         console.log(loggedOutMsg);
         setLoggedIn(false);
-        localStorage.setItem("userEmail", "");
+        localStorage.setItem("userToken", "");
         localStorage.setItem("userID", "");
         window.dispatchEvent(new Event('storage'))
     };
@@ -104,13 +104,13 @@ const Header = () => {
     // setLoggedIn(false);
 
     const loginCheck = () => {
-        const userEmail = localStorage.getItem("userEmail");
+        const userToken = localStorage.getItem("userToken");
         const userID = localStorage.getItem("userID");
-        console.log(userEmail);
+        console.log(userToken);
         console.log(userID);
 
-        if (userEmail === "") {
-            console.log(userEmail);
+        if (userToken === "") {
+            console.log(userToken);
             setLoggedIn(false);
         } else {
             setLoggedIn(true);
