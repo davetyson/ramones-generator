@@ -47,8 +47,9 @@ const Header = () => {
         const loggedOutMsg = await signOut(auth);
         console.log(loggedOutMsg);
         setLoggedIn(false);
-        localStorage.setItem("email", "");
+        localStorage.setItem("userEmail", "");
         localStorage.setItem("userID", "");
+        window.dispatchEvent(new Event('storage'))
     };
 
     // Emulators
@@ -102,19 +103,27 @@ const Header = () => {
 
     // setLoggedIn(false);
 
-    useEffect(() => {
+    const loginCheck = () => {
         const userEmail = localStorage.getItem("userEmail");
         const userID = localStorage.getItem("userID");
         console.log(userEmail);
         console.log(userID);
 
-        if (userEmail === null) {
+        if (userEmail === "") {
             console.log(userEmail);
             setLoggedIn(false);
         } else {
             setLoggedIn(true);
             console.log(userID);
         }
+    };
+
+    useEffect(() => {
+        window.addEventListener('storage', loginCheck);
+
+        return () => {
+            window.removeEventListener('storage', loginCheck);
+        };
     }, []);
 
     console.log(loggedIn);

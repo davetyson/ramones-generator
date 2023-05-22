@@ -34,8 +34,8 @@ const LoginForm = (props) => {
     const logAttempt = async (e) => {
         e.preventDefault();
         if (loggedIn === false) {
-            const loginEmail = email;
-            const loginPassword = password;
+            const loginEmail = email.trim();
+            const loginPassword = password.trim();
 
             // call 
             const auth = getAuth(app);
@@ -49,6 +49,7 @@ const LoginForm = (props) => {
                 console.log(userID);
                 localStorage.setItem("userEmail", userEmail);
                 localStorage.setItem("userID", userID);
+                window.dispatchEvent(new Event('storage'))
                 console.log(user);
             })
             .catch((error) => {
@@ -66,10 +67,33 @@ const LoginForm = (props) => {
         }
     }
 
+    const loginCheck = () => {
+        const userEmail = localStorage.getItem("userEmail");
+        const userID = localStorage.getItem("userID");
+        console.log(userEmail);
+        console.log(userID);
+
+        if (userEmail === "") {
+            console.log(userEmail);
+            setLoggedIn(false);
+        } else {
+            setLoggedIn(true);
+            console.log(userID);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('storage', loginCheck);
+
+        return () => {
+            window.removeEventListener('storage', loginCheck);
+        };
+    }, []);
+
     // this just console.logs the loggedIn status so I know what it is while testing
     useEffect(() => {
         console.log(loggedIn);
-    }, [loggedIn])
+    }, [loggedIn]);
 
     useEffect(() => {
         console.log(loginError);
@@ -79,32 +103,39 @@ const LoginForm = (props) => {
         // if the login error is about the password, flash that the password is wrong
         // if the login error is about anything else, flash try again
         // see about how you include a password reset link
-    }, [loginError])
+    }, [loginError]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
-    }
+    };
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
-    }
+    };
 
     return (
         <>
             <section className="p-10">
-                <h2 className="mb-10 uppercase quantico w-full text-4xl font-bold text-customGreen">Log In</h2>
-                <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">Log in to your account to save new songs and view your saved favorites!</p>
-                <div>
-                    <form onSubmit={logAttempt}>
-                        <fieldset className="flex flex-col items-center">
-                            <label className="sr-only" htmlFor="email">Email</label>
-                            <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-1/2" id="email" type="email" placeholder="Email" onChange={handleEmailChange} value={props.email} />
-                            <label className="sr-only" htmlFor="password">Password</label>
-                            <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-1/2" id="password" type="password" placeholder="Password" onChange={handlePasswordChange} value={props.password} />
-                        </fieldset>
-                        <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">Log In</button>
-                    </form>
-                </div>
+                <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">Log In</h2>
+                { loggedIn === false ?
+                <>
+                    <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">Log in to your account to save new songs and view your saved favorites!</p>
+                    <div>
+                        <form onSubmit={logAttempt}>
+                            <fieldset className="flex flex-col items-center">
+                                <label className="sr-only" htmlFor="email">Email</label>
+                                <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-full md:w-1/2" id="email" type="email" placeholder="Email" onChange={handleEmailChange} value={props.email} />
+                                <label className="sr-only" htmlFor="password">Password</label>
+                                <input className="text-white text-center lg:text-2xl text-l border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-full md:w-1/2" id="password" type="password" placeholder="Password" onChange={handlePasswordChange} value={props.password} />
+                            </fieldset>
+                            <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">Log In</button>
+                        </form>
+                    </div>
+                </> :
+                <>
+                <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">Congratulations! You are now logged in!</p>
+                </>
+                }
             </section>
         </>
     )
