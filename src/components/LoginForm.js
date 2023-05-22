@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // If I need the emulator I can bring it back
 // connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword
 
@@ -14,6 +14,8 @@ const LoginForm = (props) => {
     const [ email , setEmail ] = useState("");
     const [ password , setPassword ] = useState("");
     const [ signingUp , setSigningUp ] = useState(false);
+    const [ forgotPassword, setForgotPassword ] = useState(false);
+    const [ resetSent, setResetSent ] = useState(false);
 
     // initial firebase config
     const firebaseConfig = {
@@ -121,6 +123,35 @@ const LoginForm = (props) => {
         });
     }
 
+    const resetPassword = async () => {
+        setForgotPassword(true);
+        const auth = getAuth(app);
+        sendPasswordResetEmail(auth, email.trim())
+        .then(() => {
+            // Password reset email sent!
+            setResetSent(true);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setLoginError(errorCode);
+            console.log(errorCode);
+            console.log(errorMessage);
+            setResetSent(false);
+            // ..
+        });
+    };
+
+    const checkFormAction = () => {
+        if (forgotPassword === true) {
+            resetPassword();
+        } else if (signingUp === true) {
+            createAccount();
+        } else {
+            logAttempt();
+        }
+    };
+
     useEffect(() => {
         window.addEventListener('storage', loginCheck);
 
@@ -133,6 +164,11 @@ const LoginForm = (props) => {
     useEffect(() => {
         console.log(loggedIn);
     }, [loggedIn]);
+
+    // useEffect(() => {
+    //     resetPassword();
+    //     // eslint-disable-next-line
+    // }, [signingUp]);
 
     useEffect(() => {
         console.log(loginError);
@@ -157,12 +193,23 @@ const LoginForm = (props) => {
         }, 4000);
     }, [loginError]);
 
+    // Will need to keep working on this to make sure that the reset password functions work
+    // Right now the navigation between log in and sign up works perfectly, you can move between all those links just fine and everything renders as it should
+    // When you click in to reset your password, and then click the sign up button, it doesn't re-render the h2, the text, or the form, so I need to work on this
+    // Will likely have to take all the spots where I'm checking for three things (are we logging in, signing up, or did we forget our password) and create functions for them, like I did for the form submission
+    // Check for certain state conditions and then if they exist, put certain information into a variable, and use that variable in the rendered html
+    // Will be able to remove most of the ternary's after moving things into functions, and then things should work well
+
     return (
         <>
             <section className="p-10">
-                { loggedIn === false ?
-                <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">{signingUp === false ? `Log In` : `Sign Up`}</h2>
-                : <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">You are logged in</h2>
+                {loggedIn === false ?
+                    forgotPassword === false ?
+                        <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">{signingUp === false ? `Log In` : `Sign Up`}</h2>
+                    :
+                        <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">Reset Password</h2>
+                : 
+                    <h2 className="uppercase quantico mb-5 w-full text-4xl font-bold text-customGreen">You are logged in</h2>
                 }
                 {loginError !== "" ?
                 <div>
@@ -172,16 +219,36 @@ const LoginForm = (props) => {
                 }
                 { loggedIn === false ?
                 <>
+                {forgotPassword === false ?
                     <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">{signingUp === false ? `Log in to your account to save new songs and view your saved favorites!` : `Sign up for an account to save your favorite songs!`}</p>
-                    <form onSubmit={signingUp === false ? logAttempt : createAccount}>
+                : 
+                    <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">{resetSent === false ? `Enter your email to reset your password` : `Password reset sent! Please check your email to reset your password.`}</p>
+                }
+                    <form onSubmit={checkFormAction}>
                         <fieldset className="flex flex-col items-center">
                             <label className="sr-only" htmlFor="email">Email</label>
                             <input className="text-white text-center lg:text-2xl text-lg border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-full md:w-1/2" id="email" type="email" placeholder="Email" onChange={handleEmailChange} value={email} />
-                            <label className="sr-only" htmlFor="password">Password</label>
-                            <input className="text-white text-center lg:text-2xl text-lg border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-full md:w-1/2" id="password" type="password" placeholder="Password" onChange={handlePasswordChange} value={password} />
+                            {forgotPassword === false ?
+                            <>
+                                <label className="sr-only" htmlFor="password">Password</label>
+                                <input className="text-white text-center lg:text-2xl text-lg border-4 border-white mb-5 p-1 quantico rounded-md bg-black w-full md:w-1/2" id="password" type="password" placeholder="Password" onChange={handlePasswordChange} value={password} />
+                            </>
+                            : <></>
+                            }
                         </fieldset>
-                        <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">{signingUp === false ? `Log In` : `Sign Up`}</button>
+                        {forgotPassword === false ?
+                            <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">{signingUp === false ? `Log In` : `Sign Up`}</button>
+                        : 
+                            <button type="submit" className="p-2 mt-5 md:mt-0 border-4 border-white bg-customGreen rounded-md text-lg sm:text-2xl text-black font-bold transition hover:text-customGreen focus:text-customGreen hover:bg-black focus:bg-black">Reset Password</button>
+                        }
                     </form>
+                    {signingUp === false ? 
+                        forgotPassword === false ?
+                        <p className="mt-5 text-lg lg:w-2/3 inline-block mx-auto">Forgot your password? <button className="underline" onClick={()=>{setForgotPassword(true)}}>Click here</button> to reset your password.</p>
+                        : <></>
+                        :
+                        <></>
+                    }
                     {signingUp === false ? 
                         <p className="mt-5 text-lg lg:w-2/3 inline-block mx-auto">Don't have an account? <button className="underline" onClick={()=>{setSigningUp(true)}}>Sign up for one here</button> to save your favorite songs!</p>
                         :
