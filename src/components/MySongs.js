@@ -84,12 +84,14 @@ const MySongs = () => {
         return () => {
             window.removeEventListener('storage', loginCheck);
         };
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         setLocalUserID(localStorage.getItem("userID"));
         setLocalUserToken(localStorage.getItem("userToken"));
         loginCheck();
+        // eslint-disable-next-line
     }, []);
 
     console.log(loggedIn);
