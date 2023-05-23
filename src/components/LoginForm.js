@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 // If I need the emulator I can bring it back
 // connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword
 
@@ -32,6 +33,7 @@ const LoginForm = (props) => {
 
     // initialize firebase app
     const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
     // Emulators
     // connectAuthEmulator(auth, "https://localhost:9099");
@@ -64,7 +66,22 @@ const LoginForm = (props) => {
                 const user = userCredential.user;
                 const userID = user.auth.currentUser.uid;
                 const userToken = user.auth.currentUser.accessToken;
-                setLoggedIn(true);
+                
+                set(ref(database, `/${userID}/userToken/`), {userToken: userToken});
+            // .then((data)=>{
+            //     let userObj = data.val();
+            //     return userObj;
+            //     // let userArray = Object.entries(userObj)[1];
+            //     // let fbUserToken = userArray[1];
+            //     // setFbUserToken(fbUserToken);
+            // })
+            // .then((userObj)=>{
+            //     console.log(userObj);
+            //     const userArray = Object.entries(userObj)[1];
+            //     let fbUserToken = userArray[1];
+            //     setFbUserToken(fbUserToken);
+            // });
+
                 console.log(userToken);
                 console.log(userID);
                 localStorage.setItem("userToken", userToken);
