@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // If I need the emulator I can bring it back
@@ -19,17 +20,17 @@ const LoginForm = (props) => {
     const [ infoP, setInfoP ] = useState("");
 
     // FIREBASE INIT
-    // initial firebase config
     const firebaseConfig = {
-    apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
-    authDomain: "ramones-generator.firebaseapp.com",
-    projectId: "ramones-generator",
-    storageBucket: "ramones-generator.appspot.com",
-    messagingSenderId: "295603373754",
-    appId: "1:295603373754:web:e9f185081077c9b863e483"
-    };
+        apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
+        authDomain: "ramones-generator.firebaseapp.com",
+        databaseURL: "https://ramones-generator-default-rtdb.firebaseio.com",
+        projectId: "ramones-generator",
+        storageBucket: "ramones-generator.appspot.com",
+        messagingSenderId: "295603373754",
+        appId: "1:295603373754:web:e9f185081077c9b863e483"
+      };
 
-    // initialize firebase app and auth
+    // initialize firebase app
     const app = initializeApp(firebaseConfig);
 
     // Emulators
@@ -37,9 +38,9 @@ const LoginForm = (props) => {
 
     // FIREBASE CALL FUNCTION
     const fbAction = async (fbCall) => {
-        // e.preventDefault();
         const loginEmail = email.trim();
         const loginPassword = password.trim();
+
         if (fbCall === sendPasswordResetEmail) {
             const auth = getAuth(app);
             await sendPasswordResetEmail(auth, email.trim())
@@ -116,28 +117,28 @@ const LoginForm = (props) => {
         setPassword(e.target.value);
     };
 
-        // useEffect to determine h2 text
-        useEffect(() => {
-            console.log(signingUp);
-            console.log(loggedIn);
-            console.log(forgotPassword);
-            if (loggedIn === true) {
-                setActionText("You are now logged in");
-                setInfoP("Congratulations! You are now logged in. Head to the Generator to start generating songs!");
-            } else if (forgotPassword === true) {
-                setActionText("Reset Password");
-                setInfoP("Enter your email to reset your password.");
-            } else if (signingUp === true) {
-                setActionText("Sign Up");
-                setInfoP("Sign up for an account to save your favorite songs!");
-            } else if (resetSent === true) {
-                setActionText("Your Password Reset Email Has Been Sent");
-                setInfoP("Please check your email inbox to reset your password!")
-            } else {
-                setActionText("Log In");
-                setInfoP("Log in to your account to save new songs and view your saved favorites!");
-            }
-        }, [forgotPassword, loggedIn, signingUp, resetSent]);
+    // useEffect to determine h2 text
+    useEffect(() => {
+        console.log(signingUp);
+        console.log(loggedIn);
+        console.log(forgotPassword);
+        if (loggedIn === true) {
+            setActionText("You are now logged in");
+            setInfoP("Congratulations! You are now logged in.");
+        } else if (forgotPassword === true) {
+            setActionText("Reset Password");
+            setInfoP("Enter your email to reset your password.");
+        } else if (signingUp === true) {
+            setActionText("Sign Up");
+            setInfoP("Sign up for an account to save your favorite songs!");
+        } else if (resetSent === true) {
+            setActionText("Your Password Reset Email Has Been Sent");
+            setInfoP("Please check your email inbox to reset your password!")
+        } else {
+            setActionText("Log In");
+            setInfoP("Log in to your account to save new songs and view your saved favorites!");
+        }
+    }, [forgotPassword, loggedIn, signingUp, resetSent]);
 
     // check for an error message and determine which one to display to the user if one exists
     useEffect(() => {        
@@ -153,6 +154,8 @@ const LoginForm = (props) => {
             setErrorMsg("This email does not have an account yet. Try signing up to save your songs.");
         } else if (loginError === "auth/too-many-requests") {
             setErrorMsg("There have been too many failed logins for this account. Please try logging in again in a few hours or use another account.");
+        } else if (loginError === "auth/missing-password") {
+            setErrorMsg("Please enter your password.");
         } else {
             setErrorMsg("There has been an error.");
         }
@@ -249,7 +252,10 @@ const LoginForm = (props) => {
                     }
                 </>
             :
-                <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">{infoP}</p>
+                <>
+                    <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto">{infoP}</p>
+                    <p className="mb-5 text-lg lg:w-2/3 inline-block mx-auto"><NavLink to="/" className="underline">Head to the Generator</NavLink> to start generating songs!</p>
+                </>
             }
             </section>
         </>

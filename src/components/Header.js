@@ -31,13 +31,14 @@ const Header = () => {
 
     // initial firebase config
     const firebaseConfig = {
-    apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
-    authDomain: "ramones-generator.firebaseapp.com",
-    projectId: "ramones-generator",
-    storageBucket: "ramones-generator.appspot.com",
-    messagingSenderId: "295603373754",
-    appId: "1:295603373754:web:e9f185081077c9b863e483"
-    };
+        apiKey: "AIzaSyCggW88fy90jEAac9ygi33b-XL4gZsAtIk",
+        authDomain: "ramones-generator.firebaseapp.com",
+        databaseURL: "https://ramones-generator-default-rtdb.firebaseio.com",
+        projectId: "ramones-generator",
+        storageBucket: "ramones-generator.appspot.com",
+        messagingSenderId: "295603373754",
+        appId: "1:295603373754:web:e9f185081077c9b863e483"
+      };
 
     // initialize firebase app and auth
     const app = initializeApp(firebaseConfig);
@@ -49,6 +50,8 @@ const Header = () => {
         setLoggedIn(false);
         localStorage.setItem("userToken", "");
         localStorage.setItem("userID", "");
+        console.log(localStorage.getItem("userToken"));
+        console.log(localStorage.getItem("userID"));
         window.dispatchEvent(new Event('storage'))
     };
 
